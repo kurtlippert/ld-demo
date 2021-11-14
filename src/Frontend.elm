@@ -82,11 +82,12 @@ view model =
                 , Attr.style "padding-top" "40px"
                 ]
                 [ Html.text model.message ]
-            , Html.div []
-                [ Html.button [ onClick Increment ] [ Html.text "+" ]
+            , Html.div [ Attr.style "margin" "20px 5px 20px 5px" ]
+                [ Html.button [ onClick Increment, Attr.style "margin" "10px"] [ Html.text "+" ]
                 , Html.span [] [ Html.text <| String.fromInt model.counter ]
-                , Html.button [ onClick Decrement ] [ Html.text "-" ]
+                , Html.button [ onClick Decrement, Attr.style "margin" "10px" ] [ Html.text "-" ]
                 ]
+            , Html.div [] [ Html.text "Textual change" ]
             ]
         ]
     }

@@ -9,6 +9,11 @@ type alias FrontendModel =
     { key : Key
     , message : String
     , counter : Int
+    , moreDropdownActive : Bool
+    , loginActive : Bool
+    , showPassword : Bool
+    , userNameText : String
+    , passwordText : String
     }
 
 
@@ -20,6 +25,12 @@ type alias BackendModel =
 type FrontendMsg
     = UrlClicked UrlRequest
     | UrlChanged Url
+    | NavigateTo String
+    | ToggleMoreDropdown Bool
+    | ToggleLogin Bool
+    | ToggleShowPassword Bool
+    | TypedUsername String
+    | TypedPassword String
     | Increment
     | Decrement
     | NoOpFrontendMsg

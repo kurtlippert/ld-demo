@@ -9,6 +9,10 @@ import Lamdera
 import Types exposing (..)
 import Url
 
+import Topnav exposing (topNav)
+
+import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, padding, text, width)
+
 
 type alias Model =
     FrontendModel
@@ -31,6 +35,11 @@ init url key =
     ( { key = key
       , message = "Welcome to Lamdera! You're looking at the auto-generated base implementation. Check out src/Frontend.elm to start coding!"
       , counter = 5
+      , moreDropdownActive = False
+      , loginActive = False
+      , passwordText = ""
+      , userNameText = ""
+      , showPassword = False
       }
     , Cmd.none
     )
@@ -54,11 +63,29 @@ update msg model =
         UrlChanged url ->
             ( model, Cmd.none )
 
+        NavigateTo href ->
+            ( model, Nav.pushUrl model.key href )
+
         Increment ->
             ( { model | counter = model.counter + 1 }, Cmd.none )
 
         Decrement ->
             ( { model | counter = model.counter - 1 }, Cmd.none )
+
+        ToggleLogin isActive ->
+            ( { model | loginActive = isActive }, Cmd.none )
+
+        ToggleMoreDropdown isActive ->
+            ( { model | moreDropdownActive = isActive }, Cmd.none )
+
+        ToggleShowPassword isActive ->
+            ( { model | showPassword = isActive }, Cmd.none )
+
+        TypedUsername username ->
+            ( { model | userNameText = username }, Cmd.none )
+
+        TypedPassword password ->
+            ( { model | passwordText = password }, Cmd.none )
 
         NoOpFrontendMsg ->
             ( model, Cmd.none )
@@ -71,23 +98,34 @@ updateFromBackend msg model =
             ( model, Cmd.none )
 
 
+-- view : Model -> Browser.Document FrontendMsg
+-- view model =
+--     { title = ""
+--     , body =
+--         [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
+--             [ Html.img [ Attr.src "https://lamdera.app/lamdera-logo-black.png", Attr.width 150 ] []
+--             , Html.div
+--                 [ Attr.style "font-family" "sans-serif"
+--                 , Attr.style "padding-top" "40px"
+--                 ]
+--                 [ Html.text model.message ]
+--             , Html.div [ Attr.style "margin" "20px 5px 20px 5px" ]
+--                 [ Html.button [ onClick Increment, Attr.style "margin" "10px"] [ Html.text "+" ]
+--                 , Html.span [] [ Html.text <| String.fromInt model.counter ]
+--                 , Html.button [ onClick Decrement, Attr.style "margin" "10px" ] [ Html.text "-" ]
+--                 ]
+--             , Html.div [] [ Html.text "Textual change" ]
+--             ]
+--         ]
+--     }
+
 view : Model -> Browser.Document FrontendMsg
 view model =
-    { title = ""
+    { title = "Lamdera Demos"
     , body =
-        [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
-            [ Html.img [ Attr.src "https://lamdera.app/lamdera-logo-black.png", Attr.width 150 ] []
-            , Html.div
-                [ Attr.style "font-family" "sans-serif"
-                , Attr.style "padding-top" "40px"
+        [ layout [ width fill, height fill ] <|
+            column [ width fill ]
+                [ topNav model
                 ]
-                [ Html.text model.message ]
-            , Html.div [ Attr.style "margin" "20px 5px 20px 5px" ]
-                [ Html.button [ onClick Increment, Attr.style "margin" "10px"] [ Html.text "+" ]
-                , Html.span [] [ Html.text <| String.fromInt model.counter ]
-                , Html.button [ onClick Decrement, Attr.style "margin" "10px" ] [ Html.text "-" ]
-                ]
-            , Html.div [] [ Html.text "Textual change" ]
-            ]
         ]
     }

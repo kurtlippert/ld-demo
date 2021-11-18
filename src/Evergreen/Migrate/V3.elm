@@ -28,7 +28,7 @@ backendModel old =
 
 frontendMsg : Old.FrontendMsg -> MsgMigration New.FrontendMsg New.FrontendMsg
 frontendMsg old =
-    MsgMigrated <|
+    MsgMigrated
         ( case old of
             Old.UrlClicked x -> New.UrlClicked x
             Old.UrlChanged x -> New.UrlChanged x

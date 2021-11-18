@@ -29,22 +29,14 @@ backendModel old =
 frontendMsg : Old.FrontendMsg -> MsgMigration New.FrontendMsg New.FrontendMsg
 frontendMsg old =
     MsgMigrated <|
-        case old of
-            Old.UrlClicked _ -> New.UrlClicked
-            Old.UrlChanged _ -> New.UrlChanged
+        ( case old of
+            Old.UrlClicked x -> New.UrlClicked x
+            Old.UrlChanged x -> New.UrlChanged x
             Old.Increment -> New.Increment
             Old.Decrement -> New.Decrement
             Old.NoOpFrontendMsg -> New.NoOpFrontendMsg
-    -- MsgMigrated
-    --     ( New.NavigateTo String)
-    -- Unimplemented
-    -- | NavigateTo String
-    -- | ToggleMoreDropdown Bool
-    -- | ToggleLogin Bool
-    -- | ToggleShowPassword Bool
-    -- | TypedUsername String
-    -- | TypedPassword String
-
+        , Cmd.none
+        )
 
 toBackend : Old.ToBackend -> MsgMigration New.ToBackend New.BackendMsg
 toBackend old =

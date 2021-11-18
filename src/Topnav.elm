@@ -34,7 +34,7 @@ topNav model =
             , focused
                 [ Background.color color.white ]
             ]
-            { onPress = Just (NavigateTo "/"), label = text "Elm Parcel Starter" }
+            { onPress = Just (NavigateTo "/"), label = text "Lamdera Demo" }
         , button [ paddingXY 10 21 ] (text "About") (NavigateTo "/about")
         , button [ paddingXY 10 21 ] (text "Users") (NavigateTo "/users")
         , button [ paddingXY 10 21 ] (text "Demo") (NavigateTo "/demo")

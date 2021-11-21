@@ -1,17 +1,16 @@
 module Evergreen.Migrate.V6 exposing (..)
 
 import Evergreen.V3.Types as Old
-import Evergreen.V6.Route exposing (Route)
+import Evergreen.V6.Route exposing (Route(..))
 import Evergreen.V6.Types as New
 import Lamdera.Migrations exposing (..)
-import Route
 
 
 frontendModel : Old.FrontendModel -> ModelMigration New.FrontendModel New.FrontendMsg
 frontendModel old =
     ModelMigrated
         ( { key = old.key
-          , route = Route.Home
+          , route = Home
           , moreDropdownActive = False
           , loginActive = False
           , showPassword = False

@@ -8,7 +8,7 @@ import Element.Input as Input
 import Types exposing (FrontendMsg(..))
 
 
-button3 : 
+button3 :
     List (Attribute FrontendMsg)
     -> Element FrontendMsg
     -> FrontendMsg

@@ -22,6 +22,7 @@ import Route exposing (Route(..), fromUrl, routeParser)
 import Topnav exposing (topNav)
 import Types exposing (..)
 import Url
+import Footer exposing (footer)
 
 
 type alias Model =
@@ -154,6 +155,7 @@ view model =
             column [ width fill ]
                 [ topNav model
                 , router model
+                , footer
                 ]
         ]
     }

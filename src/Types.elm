@@ -3,12 +3,12 @@ module Types exposing (..)
 import Browser exposing (UrlRequest)
 import Browser.Navigation exposing (Key)
 import Url exposing (Url)
+import Route exposing (Route)
 
 
 type alias FrontendModel =
     { key : Key
-    , message : String
-    , counter : Int
+    , route : Route
     , moreDropdownActive : Bool
     , loginActive : Bool
     , showPassword : Bool
@@ -31,8 +31,6 @@ type FrontendMsg
     | ToggleShowPassword Bool
     | TypedUsername String
     | TypedPassword String
-    | Increment
-    | Decrement
     | NoOpFrontendMsg
 
 

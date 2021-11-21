@@ -2,16 +2,26 @@ module Frontend exposing (..)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Html
-import Html.Attributes as Attr
-import Html.Events exposing (onClick)
+import Content exposing (content)
+import Element
+    exposing
+        ( Element
+        , centerX
+        , centerY
+        , column
+        , el
+        , fill
+        , height
+        , layout
+        , padding
+        , text
+        , width
+        )
 import Lamdera
+import Route exposing (Route(..), fromUrl, routeParser)
+import Topnav exposing (topNav)
 import Types exposing (..)
 import Url
-
-import Topnav exposing (topNav)
-
-import Element exposing (Element, centerX, centerY, column, el, fill, height, layout, padding, text, width)
 
 
 type alias Model =
@@ -33,8 +43,7 @@ app =
 init : Url.Url -> Nav.Key -> ( Model, Cmd FrontendMsg )
 init url key =
     ( { key = key
-      , message = "Welcome to Lamdera! You're looking at the auto-generated base implementation. Check out src/Frontend.elm to start coding!"
-      , counter = 5
+      , route = fromUrl url
       , moreDropdownActive = False
       , loginActive = False
       , passwordText = ""
@@ -61,16 +70,10 @@ update msg model =
                     )
 
         UrlChanged url ->
-            ( model, Cmd.none )
+            ( { model | route = fromUrl url } , Cmd.none)
 
         NavigateTo href ->
             ( model, Nav.pushUrl model.key href )
-
-        Increment ->
-            ( { model | counter = model.counter + 1 }, Cmd.none )
-
-        Decrement ->
-            ( { model | counter = model.counter - 1 }, Cmd.none )
 
         ToggleLogin isActive ->
             ( { model | loginActive = isActive }, Cmd.none )
@@ -98,6 +101,7 @@ updateFromBackend msg model =
             ( model, Cmd.none )
 
 
+
 -- view : Model -> Browser.Document FrontendMsg
 -- view model =
 --     { title = ""
@@ -119,6 +123,29 @@ updateFromBackend msg model =
 --         ]
 --     }
 
+
+router : FrontendModel -> Element FrontendMsg
+router model =
+    case model.route of
+        About ->
+            el [ padding 20, centerX, centerY ] <| text "about"
+
+        Users ->
+            el [ padding 20, centerX, centerY ] <| text "users"
+
+        Demo ->
+            content model ""
+
+        DemoControl controlName ->
+            content model controlName
+
+        NotFound ->
+            el [ padding 20, centerX, centerY ] <| text "Not Found"
+
+        _ ->
+            el [ padding 20, centerX, centerY ] <| text "generic"
+
+
 view : Model -> Browser.Document FrontendMsg
 view model =
     { title = "Lamdera Demos"
@@ -126,6 +153,7 @@ view model =
         [ layout [ width fill, height fill ] <|
             column [ width fill ]
                 [ topNav model
+                , router model
                 ]
         ]
     }
